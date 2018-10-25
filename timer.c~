@@ -21,6 +21,6 @@ void setupTimer(uint16_t period)
 	 * interrupt handler will not be invoked. 
 	 */
 	 
-	 uint32_t x = *CMU_HFPERCLKEN0 + 0x01000000;
+	 *CMU_HFPERCLKEN0;
 	 
 }
