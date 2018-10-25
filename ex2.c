@@ -31,28 +31,71 @@ int playStarWars(uint16_t songCounter)
 	switch(songCounter)
 	{
 		case 0: return NOTE_F4;			
-		case 1;	return NOTE_F4;
+		case 1:	return NOTE_F4;
 		case 2: return NOTE_GS4;
 		case 3: return NOTE_GS4;
 		case 4: return NOTE_GS4;
 		case 5: return NOTE_GS4;
 		case 6: return NOTE_F4;
 		case 7: return NOTE_F4;
-		case 6: return NOTE_F4;
-		case 2: return 
-		case 2: return 
+		case 8: return NOTE_F4;
+		case 9: return NOTE_A4;
+		case 10: return NOTE_C5;
+		case 11: return NOTE_C5;
+		case 12: return NOTE_C5;
+		case 13: return NOTE_C5;
+		case 14: return NOTE_A4;
+		case 15: return NOTE_A4;
+		case 16: return NOTE_A4;
+		case 17: return NOTE_C5;
+		case 18: return NOTE_E5;
+		case 19: return NOTE_E5;
+		case 20: return NOTE_E5;
+		case 21: return NOTE_E5;
+		case 22: return NOTE_E5;
+		case 23: return 1;
+		case 24: return 1;
+		case 25: return 1;
+		case 26: return 1;
+		case 27: return NOTE_F4;			
+		case 28: return NOTE_F4;
+		case 29: return NOTE_GS4;
+		case 30: return NOTE_GS4;
+		case 31: return NOTE_GS4;
+		case 32: return NOTE_GS4;
+		case 33: return NOTE_F4;
+		case 34: return NOTE_F4;
+		case 35: return NOTE_F4;
+		case 36: return NOTE_C5;
+		case 37: return NOTE_A4;
+		case 38: return NOTE_A4;
+		case 39: return NOTE_A4;
+		case 40: return NOTE_A4;
+		case 41: return NOTE_F4;
+		case 42: return NOTE_F4;
+		case 43: return NOTE_F4;
+		case 44: return NOTE_C5;
+		case 45: return NOTE_A4;
+		case 46: return NOTE_A4;
+		case 47: return NOTE_A4;
+		case 48: return NOTE_A4;
+		case 49: return NOTE_A4;
+
+
+
+		default: return 1;
 	}
 }
 
  void startupMelody() {
  	uint16_t note = 1; // 1 means mute
+ 	bool toggle = false;
 	
-	for( uint32_t startMelodyCounter = 0; startMelodyCounter<135000 ; startMelodyCounter++ ) // 3 seconds startup melody
+	for( uint32_t startMelodyCounter = 0; startMelodyCounter<315000 ; startMelodyCounter++ ) // 7 seconds startup melody
 	{
 		/* SAMPLING PART */
-		//Busy wait
 		uint16_t samplingTimer = *TIMER1_CNT; 
-		while(*TIMER1_CNT<SAMPLE_PERIOD){
+		while(samplingTimer<SAMPLE_PERIOD){   //Busy wait
 			samplingTimer = *TIMER1_CNT;
 		}
 		// note frequency in terms of sampling frequency
@@ -61,7 +104,7 @@ int playStarWars(uint16_t songCounter)
  		/* NOTE PART */
  		uint16_t noteFreqMaxCount = 45000 / note; //we are calculating the frequency in terms of the sampling frequency
 		
- 			if (startMelodyCounter % NoteFreqMaxCount = 0){
+ 			if (startMelodyCounter % noteFreqMaxCount == 0){
 				
 				if (toggle){
 					// mute if note is 1
@@ -78,17 +121,17 @@ int playStarWars(uint16_t songCounter)
 			}
 		// each note is activated for 0.125 seconds or 5625 samples
 		uint16_t songNoteMaxCount = 5625;
-		uint16_t songCounter = startMelodyCounter / NoteFreqMaxCount;
-		if (startMelodyCounter % NoteFreqMaxCount = 0){
+		uint16_t songCounter = startMelodyCounter / songNoteMaxCount;
+		if (startMelodyCounter % songNoteMaxCount == 0){
 
-			note = playStarWars(songCounter)
+			note = playStarWars(songCounter);
 
 		}
 
 
 			
 		
-		playTune(NOTE_G3,20000)	
+			
 			
  	}
 }
@@ -106,22 +149,28 @@ int main(void)
 	 * Enable interrupt handling 
 	 */
 	setupNVIC();
+	startupMelody();
+
 
 	/*
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
-	 bool toggle = false;
-	while (1) {
-		sample();
+	// bool toggle = false;
 
-		uint16_t samplingTimer = *TIMER1_CNT;
-		if (samplingTimer > SAMPLE_PERIOD){
+	while (1) {
+		
+		startupMelody();
+
+		
+
+		// uint16_t samplingTimer = *TIMER1_CNT;
+/*		if (samplingTimer > SAMPLE_PERIOD){
 			// Sample
 			*TIMER1_CNT = 0;
 			
 			uint16_t noteMaxCount = 45000 / note;
- 			if (noteCounter > NoteMaxCount){
+ 			if (noteCounter > noteMaxCount){
 				
 				if (toggle){
 					*DAC0_CH0DATA = 512;
@@ -132,7 +181,7 @@ int main(void)
 					toggle = true;
 				}
 			}	 	
-		}
+		} */
 
 	}
 

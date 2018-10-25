@@ -29,11 +29,11 @@ void setupTimer(uint16_t period)
 	 // The prescalar is set to 0 
 	 // *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
 	 
-	 *TIMER2_TOP = 0xffff;				// set period between interrupts 1st method
+//	 *TIMER2_TOP = 0xffff;				// set period between interrupts 1st method
 	 //*TIMER1_TOP = period;			// set period between interrupts 2nd method
 	 //*TIMER1_IEN = 1;					// enable timer interrupt
-	 *TIMER2_CMD = 1;					// start timer1
+//	 *TIMER2_CMD = 1;					// start timer1
 	 // The prescalar is set to 0 
-	 *TIMER2_CTRL &= 0xf0ffffff;		// set prescalar to A
-	 *TIMER2_CTRL |= 0x05000000;		// set prescalar to A	 
+//	 *TIMER2_CTRL &= 0xf0ffffff;		// set prescalar to A
+//	 *TIMER2_CTRL |= 0x05000000;		// set prescalar to A	 
 }
