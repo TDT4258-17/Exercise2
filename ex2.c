@@ -2,6 +2,7 @@
 #include <stdbool.h>
 
 #include "efm32gg.h"
+#include "notes.h"
 
 /*
  * TODO calculate the appropriate sample period for the sound wave(s) you 
@@ -10,9 +11,9 @@
  * registers are 16 bits. 
  */
 /*
- * The period between sound samples, in clock cycles 
+ * The period between sound samples, in clock cycles (not Hz)
  */
-#define   SAMPLE_PERIOD   0
+#define   SAMPLE_PERIOD   311
 
 /*
  * Declaration of peripheral setup functions 
@@ -25,6 +26,101 @@ void setupGPIO();
 /*
  * Your code will start executing here 
  */
+ uint32_t sample(uint32_t counter)
+ {
+ 	//busy wait
+ 	while(*TIMER1_CNT<SAMPLE_PERIOD){}
+ 	
+ 	uint16_t samplingTimer = *TIMER1_CNT;
+		if (samplingTimer > SAMPLE_PERIOD){
+			*TIMER1_CNT = 0;
+			
+			uint16_t noteMaxCount = 45000 / note;
+ 			if (noteCounter > NoteMaxCount){
+				
+				if (toggle){
+					*DAC0_CH0DATA = 512;
+					toggle = false;
+				}
+				else{
+					*DAC0_CH0DATA = 0;
+					toggle = true;
+				}
+			}	 		 	
+ }
+ void buzzNote(int note,int duration)
+ {
+ 	uint16_t maxCount = 45000 / note;
+ 	uint16_t counter = *TIMER1_CNT;
+ 	if (counter > maxCount){
+			*TIMER1_CNT = 0;
+			if (toggle){
+				*DAC0_CH0DATA = 512;
+				toggle = false;
+			}
+			else{
+				*DAC0_CH0DATA = 0;
+				toggle = true;
+			}
+		}
+ 	
+ 	
+ 	
+ }
+ void playTune(int note)
+ {
+ 	uint16_t noteMaxCount = 45000 / note;
+		
+ 			if (noteCounter > NoteMaxCount){
+				
+				if (toggle){
+					*DAC0_CH0DATA = 512;
+					toggle = false;
+				}
+				else{
+					*DAC0_CH0DATA = 0;
+					toggle = true;
+				}
+			}	 
+ }
+ void startupMelody() {
+ 	uint16_t note = 0;
+	
+	for( uint32_t startMelodyCounter = 0; startMelodyCounter<135000 ; startMelodyCounter++ ) // 3 seconds startup melody
+	{
+		//Busy wait
+		uint16_t samplingTimer = *TIMER1_CNT; 
+		while(*TIMER1_CNT<SAMPLE_PERIOD){
+			samplingTimer = *TIMER1_CNT;
+		}
+		// note frequency in terms of sampling frequency
+ 		
+ 		uint16_t noteFreqMaxCount = 45000 / note;
+		
+ 			if (noteFreqCounter > NoteFreqMaxCount){
+				
+				if (toggle){
+					// mute if note is 0
+					if(note!=0)
+					{ 
+						*DAC0_CH0DATA = 512;
+					}
+					toggle = false;
+				}
+				else{
+					*DAC0_CH0DATA = 0;
+					toggle = true;
+				}
+			}
+		// each note is activated for 0.125 seconds or 5625 samples
+		uint16_t songNoteMaxCount = 5625
+			
+		*TIMER1_CNT = 0;
+		playTune(NOTE_G3,20000)	
+			
+ 	}
+}
+
 int main(void)
 {
 	/*
@@ -45,18 +141,25 @@ int main(void)
 	 */
 	 bool toggle = false;
 	while (1) {
+		sample();
 
-		uint16_t counter = *TIMER1_CNT;
-		if (counter > 292*16){
+		uint16_t samplingTimer = *TIMER1_CNT;
+		if (samplingTimer > SAMPLE_PERIOD){
+			// Sample
 			*TIMER1_CNT = 0;
-			if (toggle){
-				*DAC0_CH0DATA = 1024;
-				toggle = false;
-			}
-			else{
-				*DAC0_CH0DATA = 0;
-				toggle = true;
-			}
+			
+			uint16_t noteMaxCount = 45000 / note;
+ 			if (noteCounter > NoteMaxCount){
+				
+				if (toggle){
+					*DAC0_CH0DATA = 512;
+					toggle = false;
+				}
+				else{
+					*DAC0_CH0DATA = 0;
+					toggle = true;
+				}
+			}	 	
 		}
 
 	}

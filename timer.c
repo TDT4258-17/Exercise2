@@ -22,10 +22,18 @@ void setupTimer(uint16_t period)
 	 */
 	 
 	 *CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	 *TIMER1_TOP = 0xffff;				// set period between interrupts
+	 *TIMER1_TOP = 0xffff;				// set period between interrupts 1st method
+	 //*TIMER1_TOP = period;			// set period between interrupts 2nd method
 	 //*TIMER1_IEN = 1;					// enable timer interrupt
 	 *TIMER1_CMD = 1;					// start timer1
-	 *TIMER1_CTRL &= 0xf0ffffff;		// set prescalar to 0
-	 *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
+	 // The prescalar is set to 0 
+	 // *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
+	 
+	 *TIMER2_TOP = 0xffff;				// set period between interrupts 1st method
+	 //*TIMER1_TOP = period;			// set period between interrupts 2nd method
+	 //*TIMER1_IEN = 1;					// enable timer interrupt
+	 *TIMER2_CMD = 1;					// start timer1
+	 // The prescalar is set to 0 
+	 // *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
 	 
 }

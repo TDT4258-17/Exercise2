@@ -43,7 +43,7 @@ int main(void)
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
-	 bool toggle = FALSE;
+	 bool toggle = false;
 	while (1) {
 
 		uint16_t counter = *TIMER1_CNT;
@@ -51,11 +51,11 @@ int main(void)
 			*TIMER1_CNT = 0;
 			if (toggle){
 				*DAC0_CH0DATA = 1024;
-				toggle = FALSE;
+				toggle = false;
 			}
 			else{
 				*DAC0_CH0DATA = 0;
-				toggle = TRUE;
+				toggle = true;
 			}
 		}
 
