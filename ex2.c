@@ -13,7 +13,7 @@
 /*
  * The period between sound samples, in clock cycles (not Hz)
  */
-#define   SAMPLE_PERIOD   311
+#define   SAMPLE_PERIOD   311 // which gives us 45 KHz
 
 /*
  * Declaration of peripheral setup functions 
@@ -84,24 +84,27 @@ void setupGPIO();
 			}	 
  }
  void startupMelody() {
- 	uint16_t note = 0;
+ 	uint16_t note = 1; // 1 means mute
 	
 	for( uint32_t startMelodyCounter = 0; startMelodyCounter<135000 ; startMelodyCounter++ ) // 3 seconds startup melody
 	{
+		/* SAMPLING PART */
 		//Busy wait
 		uint16_t samplingTimer = *TIMER1_CNT; 
 		while(*TIMER1_CNT<SAMPLE_PERIOD){
 			samplingTimer = *TIMER1_CNT;
 		}
 		// note frequency in terms of sampling frequency
- 		
- 		uint16_t noteFreqMaxCount = 45000 / note;
+		*TIMER1_CNT = 0;
+
+ 		/* NOTE PART */
+ 		uint16_t noteFreqMaxCount = 45000 / note; //we are calculating the frequency in terms of the sampling frequency
 		
- 			if (noteFreqCounter > NoteFreqMaxCount){
+ 			if (startMelodyCounter % NoteFreqMaxCount = 0){
 				
 				if (toggle){
-					// mute if note is 0
-					if(note!=0)
+					// mute if note is 1
+					if(note!=1)
 					{ 
 						*DAC0_CH0DATA = 512;
 					}
@@ -114,8 +117,10 @@ void setupGPIO();
 			}
 		// each note is activated for 0.125 seconds or 5625 samples
 		uint16_t songNoteMaxCount = 5625
+
+		
 			
-		*TIMER1_CNT = 0;
+		
 		playTune(NOTE_G3,20000)	
 			
  	}

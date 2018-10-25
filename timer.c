@@ -34,6 +34,6 @@ void setupTimer(uint16_t period)
 	 //*TIMER1_IEN = 1;					// enable timer interrupt
 	 *TIMER2_CMD = 1;					// start timer1
 	 // The prescalar is set to 0 
-	 // *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
-	 
+	 *TIMER2_CTRL &= 0xf0ffffff;		// set prescalar to A
+	 *TIMER2_CTRL |= 0x05000000;		// set prescalar to A	 
 }
