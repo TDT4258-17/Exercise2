@@ -21,6 +21,11 @@ void setupTimer(uint16_t period)
 	 * interrupt handler will not be invoked. 
 	 */
 	 
-	 uint32_t x = *CMU_HFPERCLKEN0 + 0x01000000;
+	 *CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
+	 *TIMER1_TOP = 0xffff;				// set period between interrupts
+	 //*TIMER1_IEN = 1;					// enable timer interrupt
+	 *TIMER1_CMD = 1;					// start timer1
+	 *TIMER1_CTRL &= 0xf0ffffff;		// set prescalar to 0
+	 *TIMER1_CTRL |= 0x00000000;		// set prescalar to A
 	 
 }

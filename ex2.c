@@ -43,7 +43,21 @@ int main(void)
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
+	 bool toggle = false;
 	while (1) {
+
+		uint16_t counter = *TIMER1_CNT;
+		if (counter > 292*16){
+			*TIMER1_CNT = 0;
+			if (toggle){
+				*DAC0_CH0DATA = 1024;
+				toggle = false;
+			}
+			else{
+				*DAC0_CH0DATA = 0;
+				toggle = true;
+			}
+		}
 
 	}
 
@@ -61,7 +75,7 @@ void setupNVIC()
 	 * assignment. 
 	 */
 	 
-	 *ISER0 = 0x802;
+	 *ISER0 = 0x802 ;		// enable timer interrupt (bit 12) and GPIO interrupt (bit 11)
 	 *GPIO_EXTIPSELL = 0x22222222;
 	 *GPIO_IEN = 0xff;
 	 *GPIO_EXTIFALL = 0xff;
