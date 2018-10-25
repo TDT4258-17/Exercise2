@@ -26,63 +26,24 @@ void setupGPIO();
 /*
  * Your code will start executing here 
  */
- uint32_t sample(uint32_t counter)
- {
- 	//busy wait
- 	while(*TIMER1_CNT<SAMPLE_PERIOD){}
- 	
- 	uint16_t samplingTimer = *TIMER1_CNT;
-		if (samplingTimer > SAMPLE_PERIOD){
-			*TIMER1_CNT = 0;
-			
-			uint16_t noteMaxCount = 45000 / note;
- 			if (noteCounter > NoteMaxCount){
-				
-				if (toggle){
-					*DAC0_CH0DATA = 512;
-					toggle = false;
-				}
-				else{
-					*DAC0_CH0DATA = 0;
-					toggle = true;
-				}
-			}	 		 	
- }
- void buzzNote(int note,int duration)
- {
- 	uint16_t maxCount = 45000 / note;
- 	uint16_t counter = *TIMER1_CNT;
- 	if (counter > maxCount){
-			*TIMER1_CNT = 0;
-			if (toggle){
-				*DAC0_CH0DATA = 512;
-				toggle = false;
-			}
-			else{
-				*DAC0_CH0DATA = 0;
-				toggle = true;
-			}
-		}
- 	
- 	
- 	
- }
- void playTune(int note)
- {
- 	uint16_t noteMaxCount = 45000 / note;
-		
- 			if (noteCounter > NoteMaxCount){
-				
-				if (toggle){
-					*DAC0_CH0DATA = 512;
-					toggle = false;
-				}
-				else{
-					*DAC0_CH0DATA = 0;
-					toggle = true;
-				}
-			}	 
- }
+int playStarWars(uint16_t songCounter)
+{
+	switch(songCounter)
+	{
+		case 0: return NOTE_F4;			
+		case 1;	return NOTE_F4;
+		case 2: return NOTE_GS4;
+		case 3: return NOTE_GS4;
+		case 4: return NOTE_GS4;
+		case 5: return NOTE_GS4;
+		case 6: return NOTE_F4;
+		case 7: return NOTE_F4;
+		case 6: return NOTE_F4;
+		case 2: return 
+		case 2: return 
+	}
+}
+
  void startupMelody() {
  	uint16_t note = 1; // 1 means mute
 	
@@ -116,9 +77,15 @@ void setupGPIO();
 				}
 			}
 		// each note is activated for 0.125 seconds or 5625 samples
-		uint16_t songNoteMaxCount = 5625
+		uint16_t songNoteMaxCount = 5625;
+		uint16_t songCounter = startMelodyCounter / NoteFreqMaxCount;
+		if (startMelodyCounter % NoteFreqMaxCount = 0){
 
-		
+			note = playStarWars(songCounter)
+
+		}
+
+
 			
 		
 		playTune(NOTE_G3,20000)	
