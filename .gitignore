@@ -1,3 +1,4 @@
+# The following file types are ignored by git
 *.elf
 *.o
 *.c~
