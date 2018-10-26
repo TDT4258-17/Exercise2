@@ -62,7 +62,8 @@ int main(void)
 	while (1)
 	{	
 		//startupMelody();
-		uint16_t buttons = *GPIO_PC_DIN;
+		uint8_t buttons = *GPIO_PC_DIN;
+		buttons = ~buttons;
 
 		if (buttons >= 4)
 		{
@@ -306,56 +307,59 @@ int notesSound2(uint16_t songCounter)
 {
 	switch(songCounter)
 	{
-		case 0: return NOTE_F4;			
-		case 1:	return NOTE_F4;
-		case 2: return NOTE_GS4;
-		case 3: return NOTE_GS4;
+		case 0: return NOTE_F5;			
+		case 1:	return 1;
+		case 2: return NOTE_C5;
+		case 3: return 1;
 		case 4: return NOTE_GS4;
-		case 5: return NOTE_GS4;
+		case 5: return 1;
 		case 6: return NOTE_F4;
-		case 7: return NOTE_F4;
-		case 8: return NOTE_F4;
-		case 9: return NOTE_A4;
-		case 10: return NOTE_C5;
-		case 11: return NOTE_C5;
-		case 12: return NOTE_C5;
-		case 13: return NOTE_C5;
-		case 14: return NOTE_A4;
-		case 15: return NOTE_A4;
-		case 16: return NOTE_A4;
-		case 17: return NOTE_C5;
-		case 18: return NOTE_E5;
-		case 19: return NOTE_E5;
-		case 20: return NOTE_E5;
-		case 21: return NOTE_E5;
-		case 22: return NOTE_E5;
-		case 23: return 1;
-		case 24: return 1;
-		case 25: return 1;
-		case 26: return 1;
-		case 27: return NOTE_F4;			
-		case 28: return NOTE_F4;
-		case 29: return NOTE_GS4;
-		case 30: return NOTE_GS4;
+		case 7: return 1;
+		case 8: return 1;
+		case 9: return NOTE_B4;
+		case 10: return NOTE_AS4;
+		case 11: return 1;
+		case 12: return NOTE_AS4;
+		case 13: return NOTE_GS4;
+		case 14: return NOTE_E4;
+		case 15: return NOTE_F4;
+		case 16: return 1;
+		case 17: return 1;
+		case 18: return NOTE_AS4;
+		case 19: return NOTE_GS4;
+		case 20: return NOTE_AS4;
+		case 21: return 1;
+		case 22: return NOTE_E4;
+		case 23: return NOTE_F4;
+		case 24: return NOTE_GS4;
+		case 25: return NOTE_F4;
+
+		case 26: return NOTE_E4;
+		case 27: return NOTE_F5;			
+		case 28: return 1;
+		case 29: return NOTE_DS5;
+		case 30: return NOTE_C5;
 		case 31: return NOTE_GS4;
-		case 32: return NOTE_GS4;
-		case 33: return NOTE_F4;
-		case 34: return NOTE_F4;
-		case 35: return NOTE_F4;
-		case 36: return NOTE_C5;
-		case 37: return NOTE_A4;
-		case 38: return NOTE_A4;
-		case 39: return NOTE_A4;
-		case 40: return NOTE_A4;
-		case 41: return NOTE_F4;
-		case 42: return NOTE_F4;
-		case 43: return NOTE_F4;
-		case 44: return NOTE_C5;
-		case 45: return NOTE_A4;
-		case 46: return NOTE_A4;
-		case 47: return NOTE_A4;
-		case 48: return NOTE_A4;
-		case 49: return NOTE_A4;
+		case 32: return NOTE_F4;
+		case 33: return 1;
+		case 34: return NOTE_CS4;
+		case 35: return 1;
+		case 36: return NOTE_G4;
+		case 37: return 1;
+		case 38: return NOTE_CS4;
+		case 39: return 1;
+		case 40: return NOTE_GS4;
+		case 41: return 1;
+		case 42: return NOTE_CS4;
+		case 43: return 1;
+		case 44: return NOTE_AS4;
+		case 45: return 1;
+		case 46: return NOTE_CS4;
+		case 47: return 1;
+		case 48: return NOTE_C5;
+		case 49: return 1;
+		case 50: return NOTE_AS4;
+		case 51: return 1;
 
 		default: return 1;
 	}
