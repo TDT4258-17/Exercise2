@@ -29,8 +29,8 @@ void setupTimer()
 	 */
 	 
 	*CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	*TIMER1_TOP = 317;		// set period between interrupts.
+	//*TIMER1_TOP = 317;		// set period between interrupts.
 							//    317 times 14MHz cycles 
 							// => 44.16403785 KHz frequency, closest to 44.100 KHz
- 
+	*TIMER1_TOP = 7000;
 }

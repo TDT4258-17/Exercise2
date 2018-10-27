@@ -11,13 +11,14 @@
  */
  
 //static int8_t sine_signed[32] = {0, 25, 49, 71, 90, 106, 117, 125, 127, 125, 117, 106, 90, 71, 49, 25, 0, -25, -49, -71, -90, -106, -117, -125, -127, -125, -117, -106, -90, -71, -49, -25};
-static uint8_t sine_unsigned[32] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
-static uint8_t index = 0;
- 
+static uint8_t sine_unsigned[] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
+static uint16_t index = 0;
+
 /*
  * The period between sound samples, in clock cycles (not Hz)
  */
 
+extern uint8_t song[];
 extern bool needNewDacData;
 
 /*
@@ -83,10 +84,17 @@ int main(void)
 		{
 			// *GPIO_PA_DOUT = indicator++;
 				
-			*DAC0_CH0DATA = sine_unsigned[index%32];
-			*DAC0_CH1DATA = sine_unsigned[index%32];
+//			*DAC0_CH0DATA = sine_unsigned[index%32];
+//			*DAC0_CH1DATA = sine_unsigned[index%32];
+			*DAC0_CH0DATA = song[index];
+			*DAC0_CH1DATA = song[index];
+
 			index++;
 			needNewDacData = false;
+			if (index > 41000)
+			{
+				index = 0;
+			}
 		}
 	}
 
