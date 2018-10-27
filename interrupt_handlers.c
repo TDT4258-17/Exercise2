@@ -5,10 +5,8 @@
 
 static void GPIO_IRQHandler()
 {
-
 	*GPIO_IFC = *GPIO_IF;
 	*GPIO_PA_DOUT = (*GPIO_PC_DIN) << 8;
-
 }
 
 /*

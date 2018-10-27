@@ -1,4 +1,5 @@
 #define NOTE_B0  31
+
 #define NOTE_C1  33
 #define NOTE_CS1 35
 #define NOTE_D1  37
@@ -11,6 +12,7 @@
 #define NOTE_A1  55
 #define NOTE_AS1 58
 #define NOTE_B1  62
+
 #define NOTE_C2  65
 #define NOTE_CS2 69
 #define NOTE_D2  73
@@ -23,6 +25,7 @@
 #define NOTE_A2  110
 #define NOTE_AS2 117
 #define NOTE_B2  123
+
 #define NOTE_C3  131
 #define NOTE_CS3 139
 #define NOTE_D3  147
@@ -35,6 +38,7 @@
 #define NOTE_A3  220
 #define NOTE_AS3 233
 #define NOTE_B3  247
+
 #define NOTE_C4  262
 #define NOTE_CS4 277
 #define NOTE_D4  294
@@ -47,6 +51,7 @@
 #define NOTE_A4  440
 #define NOTE_AS4 466
 #define NOTE_B4  494
+
 #define NOTE_C5  523
 #define NOTE_CS5 554
 #define NOTE_D5  587
@@ -59,6 +64,7 @@
 #define NOTE_A5  880
 #define NOTE_AS5 932
 #define NOTE_B5  988
+
 #define NOTE_C6  1047
 #define NOTE_CS6 1109
 #define NOTE_D6  1175
@@ -71,6 +77,7 @@
 #define NOTE_A6  1760
 #define NOTE_AS6 1865
 #define NOTE_B6  1976
+
 #define NOTE_C7  2093
 #define NOTE_CS7 2217
 #define NOTE_D7  2349
@@ -83,6 +90,7 @@
 #define NOTE_A7  3520
 #define NOTE_AS7 3729
 #define NOTE_B7  3951
+
 #define NOTE_C8  4186
 #define NOTE_CS8 4435
 #define NOTE_D8  4699

@@ -16,8 +16,8 @@ void setupDAC()
 	 * timer interrupt 
 	 */
 
-	*CMU_HFPERCLKEN0 = *CMU_HFPERCLKEN0 | 0x20000;
-	*DAC0_CTRL = 0x50010;
-	*DAC0_CH0CTRL = 1;
-	*DAC0_CH1CTRL = 1;
+	*CMU_HFPERCLKEN0 = *CMU_HFPERCLKEN0 | 0x20000; /* enable DAC peripheral clock */
+	*DAC0_CTRL = 0x50010;			/* Prescale DAC clock */
+	*DAC0_CH0CTRL = 1;				/* enable channel 0 */
+	*DAC0_CH1CTRL = 1;				/* enable channel 1 */
 }
