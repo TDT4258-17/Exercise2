@@ -34,12 +34,14 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 				if (note != 1)
 				{
 					*DAC0_CH0DATA = 512;
+					*DAC0_CH1DATA = 512;
 				}
 				toggle = false;
 			}
 			else
 			{
 				*DAC0_CH0DATA = 0;
+				*DAC0_CH1DATA = 0;
 				toggle = true;
 			}
 		}
@@ -563,16 +565,6 @@ int notesSound3(uint16_t songCounter)
 		case 38: return 1;
 		case 39: return NOTE_A4;
 		case 40: return NOTE_A4;
-		/*
-		case 41: return NOTE_F4;
-		case 42: return NOTE_F4;
-		case 43: return NOTE_F4;
-		case 44: return NOTE_C5;
-		case 45: return NOTE_A4;
-		case 46: return NOTE_A4;
-		case 47: return NOTE_A4;
-		case 48: return NOTE_A4;
-		case 49: return NOTE_A4;*/
 
 		default: return 1;
 	}

@@ -5,6 +5,7 @@
 
 static void GPIO_IRQHandler()
 {
+	// We're still having gpio interrupts because why not, its little code
 	*GPIO_IFC = *GPIO_IF;
 	*GPIO_PA_DOUT = (*GPIO_PC_DIN) << 8;
 }
