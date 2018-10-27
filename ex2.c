@@ -9,12 +9,16 @@
  * from) runs at 14 MHz by default. Also remember that the timer counter
  * registers are 16 bits. 
  */
+ 
+//static int8_t sine_signed[32] = {0, 25, 49, 71, 90, 106, 117, 125, 127, 125, 117, 106, 90, 71, 49, 25, 0, -25, -49, -71, -90, -106, -117, -125, -127, -125, -117, -106, -90, -71, -49, -25};
+static uint8_t sine_unsigned[32] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
+static uint8_t index = 0;
+ 
 /*
  * The period between sound samples, in clock cycles (not Hz)
  */
 
-//static int8_t sine_signed[32] = {0, 25, 49, 71, 90, 106, 117, 125, 127, 125, 117, 106, 90, 71, 49, 25, 0, -25, -49, -71, -90, -106, -117, -125, -127, -125, -117, -106, -90, -71, -49, -25};
-//static uint8_t sine_unsigned[32] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
+extern bool needNewDacData;
 
 /*
  * Declaration of peripheral setup functions 
@@ -32,6 +36,8 @@ int notesSound3(uint16_t songCounter);
 
 void playMelody(uint16_t length, int (*noteTable)(uint16_t));
 
+void startTimer();
+
 /*
  * Your code will start executing here 
  */
@@ -48,34 +54,39 @@ int main(void)
 	/*
 	 * Enable interrupt handling 
 	 */
-	setupNVIC();
-
+	
+	startTimer();
+	
 	playMelody(16, notesStartup);
+	
+	
+	setupNVIC();
 
 	/*
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
-
+	uint16_t indicator = 0;
+	
 	while (1)
-	{	
-		uint8_t buttons = ~(*GPIO_PC_DIN);
+	{
+//		wfi;
+//		WFI;
+//		WFI();
+//		wfi();
+//		__wfi();
+//		_wfi();
+//		asm("wfi");
+		__asm("wfi"); // Finally, this worked.
 		
-		if (buttons & 8)
+		if (needNewDacData)
 		{
-			playMelody(124, notesSound1);
-		}
-		else if (buttons & 4)
-		{
-			playMelody(132, notesSound2);
-		}
-		else if (buttons & 2)
-		{
-			playMelody(41, notesSound3);
-		}
-		else if (buttons & 1)
-		{
-			playMelody(56, notesStarWars);
+			// *GPIO_PA_DOUT = indicator++;
+				
+			*DAC0_CH0DATA = sine_unsigned[index%32];
+			*DAC0_CH1DATA = sine_unsigned[index%32];
+			index++;
+			needNewDacData = false;
 		}
 	}
 
@@ -93,13 +104,17 @@ void setupNVIC()
 	 * assignment. 
 	 */
 	 
-	*ISER0 = 0x802;		// enable timer interrupt (bit 12) and GPIO interrupt (bit 11)
+	*ISER0 |= 0x802;	// Enable even and odd GPIO interrupts
+	*ISER0 |= 0x1000;	// Enable TIMER1 interrupts
+	
 	*GPIO_EXTIPSELL = 0x22222222;
 	*GPIO_IEN = 0xff;
 	*GPIO_EXTIFALL = 0xff;
 	*GPIO_EXTIRISE = 0xff;
 	*GPIO_IFC = *GPIO_IF;
 	
+	*TIMER1_IEN = 1;
+	*TIMER1_IFC = *TIMER1_IF;
 }
 
 /*

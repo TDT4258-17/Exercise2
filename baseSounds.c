@@ -34,12 +34,14 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 				if (note != 1)
 				{
 					*DAC0_CH0DATA = 512;
+					*DAC0_CH1DATA = 512;
 				}
 				toggle = false;
 			}
 			else
 			{
 				*DAC0_CH0DATA = 0;
+				*DAC0_CH1DATA = 0;
 				toggle = true;
 			}
 		}

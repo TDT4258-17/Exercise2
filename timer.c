@@ -3,9 +3,16 @@
 
 #include "efm32gg.h"
 
+void startTimer()
+{
+	// TIMER1_CMD is a write only register
+	*TIMER1_CMD = 1;		// start timer1
+}
+
 /*
  * function to setup the timer 
  */
+ 
 void setupTimer()
 {
 	/*
@@ -21,8 +28,9 @@ void setupTimer()
 	 * interrupt handler will not be invoked. 
 	 */
 	 
-	 *CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	 *TIMER1_TOP = 0xffff;				// set period between interrupts 1st method
-	 *TIMER1_CMD = 1;					// start timer1
+	*CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
+	*TIMER1_TOP = 317;		// set period between interrupts.
+							//    317 times 14MHz cycles 
+							// => 44.16403785 KHz frequency, closest to 44.100 KHz
  
 }

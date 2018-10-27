@@ -3,7 +3,9 @@
 
 #include "efm32gg.h"
 
-static void GPIO_IRQHandler()
+bool needNewDacData = false;
+
+static inline void GPIO_IRQHandler()
 {
 	*GPIO_IFC = *GPIO_IF;
 	*GPIO_PA_DOUT = (*GPIO_PC_DIN) << 8;
@@ -18,6 +20,9 @@ void __attribute__ ((interrupt)) TIMER1_IRQHandler()
 	 * TODO feed new samples to the DAC remember to clear the pending
 	 * interrupt by writing 1 to TIMER1_IFC 
 	 */
+	
+ 	*TIMER1_IFC = *TIMER1_IF;
+ 	needNewDacData = true;
 }
 
 /*
@@ -30,7 +35,7 @@ void __attribute__ ((interrupt)) GPIO_EVEN_IRQHandler()
 	 * interrupt 
 	 */
 	 
-	 GPIO_IRQHandler();
+	GPIO_IRQHandler();
 	 
 }
 
@@ -44,6 +49,6 @@ void __attribute__ ((interrupt)) GPIO_ODD_IRQHandler()
 	 * interrupt 
 	 */
 	 
-	 GPIO_IRQHandler();
+	GPIO_IRQHandler();
 	 
 }

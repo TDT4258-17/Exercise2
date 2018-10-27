@@ -65,13 +65,14 @@
 #define TIMER1_BASE 0x40010400
 
 #define TIMER1_CTRL ((volatile uint32_t*)(TIMER1_BASE + 0x00))
-#define TIMER1_CMD ((volatile uint32_t*)(TIMER1_BASE + 0x04))
-#define TIMER1_IEN ((volatile uint32_t*)(TIMER1_BASE + 0x0c))
-#define TIMER1_IFC ((volatile uint32_t*)(TIMER1_BASE + 0x18))
-#define TIMER1_TOP ((volatile uint32_t*)(TIMER1_BASE + 0x1c))
-#define TIMER1_CNT ((volatile uint32_t*)(TIMER1_BASE + 0x24))
+#define TIMER1_CMD  ((volatile uint32_t*)(TIMER1_BASE + 0x04))
+#define TIMER1_IEN  ((volatile uint32_t*)(TIMER1_BASE + 0x0c))
+#define TIMER1_IF   ((volatile uint32_t*)(TIMER1_BASE + 0x10))
+#define TIMER1_IFC  ((volatile uint32_t*)(TIMER1_BASE + 0x18))
+#define TIMER1_TOP  ((volatile uint32_t*)(TIMER1_BASE + 0x1c))
+#define TIMER1_CNT  ((volatile uint32_t*)(TIMER1_BASE + 0x24))
 
-// NVIC
+// NVIC - Nested Vectored Interrupt Controller
 
 #define ISER0 ((volatile uint32_t*)0xe000e100)
 #define ISER1 ((volatile uint32_t*)0xe000e104)
