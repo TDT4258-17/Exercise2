@@ -59,6 +59,33 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 	}
 
 }
+
+void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t))
+{
+	uint8_t toggle = 0;
+	for ( uint16_t noteIndex = 0; noteIndex < length; noteIndex++ )
+	{
+		uint16_t count = 0; 
+		*TIMER1_CNT = 0;
+		uint16_t note = (*noteTable)(noteIndex);
+		// how many timer periods we need to wait until toggle:
+		uint16_t timerCountsToWait = 437500 / (2*note);		// Timer has frequency 437500 Hz
+
+		while (count < 54688) // while not 0.125 ms have elapsed
+		{
+			// toggle audio cahnnels
+			*DAC0_CH0DATA = 128 * (   toggle     % 2 );
+			*DAC0_CH1DATA = 128 * ( ( toggle++ ) % 2 );
+
+			uint16_t initialTimerCounter = *TIMER1_CNT;
+			while ((count - initialTimerCounter) < timerCountsToWait) // while not one half note period has elapsed
+			{//Busy wait
+				count = *TIMER1_CNT;
+			}
+		}
+	}
+}
+
 int notesStartup(uint16_t noteCounter)
 {
 	switch(noteCounter)

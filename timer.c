@@ -21,8 +21,11 @@ void setupTimer()
 	 * interrupt handler will not be invoked. 
 	 */
 	 
-	 *CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	 *TIMER1_TOP = 0xffff;				// set period between interrupts 1st method
-	 *TIMER1_CMD = 1;					// start timer1
+	*CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
+	*TIMER1_TOP = 0xffff;				// set period between interrupts 1st method
+	*TIMER1_CMD = 1;					// start timer1
+
+	*TIMER1_CTRL &= 0xf0ffffff;
+	*TIMER1_CTRL |= 0x05000000;
  
 }

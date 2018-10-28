@@ -28,6 +28,7 @@ int notesSound2(uint16_t noteCounter);
 int notesSound3(uint16_t noteCounter);
 
 void playMelody(uint16_t length, int (*noteTable)(uint16_t));
+void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t));
 
 /*
  * Your code will start executing here 
@@ -47,7 +48,9 @@ int main(void)
 	 */
 	setupNVIC();
 
-	playMelody(16, notesStartup);
+
+//	playMelody(16, notesStartup);
+	playMelodyAlternative(16, notesStartup);
 
 	/*
 	 * TODO for higher energy efficiency, sleep while waiting for
@@ -60,19 +63,23 @@ int main(void)
 		
 		if (buttons & 8)
 		{
-			playMelody(124, notesSound1);
+			//playMelody(124, notesSound1);
+			playMelodyAlternative(124, notesSound1);
 		}
 		else if (buttons & 4)
 		{
-			playMelody(132, notesSound2);
+			//playMelody(132, notesSound2);
+			playMelodyAlternative(132, notesSound2);
 		}
 		else if (buttons & 2)
 		{
-			playMelody(41, notesSound3);
+			//playMelody(41, notesSound3);
+			playMelodyAlternative(41, notesSound3);
 		}
 		else if (buttons & 1)
 		{
-			playMelody(56, notesStarWars);
+			//playMelody(56, notesStarWars);
+			playMelodyAlternative(56, notesStarWars);
 		}
 	}
 
