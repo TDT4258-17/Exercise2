@@ -71,7 +71,7 @@ void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t))
 		// how many timer periods we need to wait until toggle:
 		uint16_t timerCountsToWait = 437500 / (2*note);		// Timer has frequency 437500 Hz
 
-		while (count < 54688) // while not 0.125 ms have elapsed
+		while (count < 54688) // while not 125 ms have elapsed
 		{
 			// toggle audio cahnnels
 			*DAC0_CH0DATA = 128 * (   toggle     % 2 );
@@ -102,12 +102,12 @@ int notesStartup(uint16_t noteCounter)
 	case 9: return NOTE_C7;
 	case 10: return NOTE_E7;
 	case 11: return NOTE_FS7;
-	case 12: return 1;
+	case 12: return 4;
 	case 13: return NOTE_E5;
 	case 14: return NOTE_C5;
 	case 15: return NOTE_A3;
 		
-	default: return 1;
+	default: return 4;
 	}
 	
 }
@@ -118,63 +118,63 @@ int notesStarWars(uint16_t noteCounter)
 	{
 		case 0: return NOTE_E4;
 		case 1:	return NOTE_E4;
-		case 2: return 1;
-		case 3: return 1;
+		case 2: return 4;
+		case 3: return 4;
 		case 4: return NOTE_E4;
 		case 5: return NOTE_E4;
-		case 6: return 1;
-		case 7: return 1;
+		case 6: return 4;
+		case 7: return 4;
 		case 8: return NOTE_E4;
 		case 9: return NOTE_E4;
-		case 10: return 1;
-		case 11: return 1;
+		case 10: return 4;
+		case 11: return 4;
 		case 12: return NOTE_F4;
 		case 13: return NOTE_F4;
-		case 14: return 1;
+		case 14: return 4;
 		case 15: return NOTE_C5;
 		case 16: return NOTE_E4;
 		case 17: return NOTE_E4;
-		case 18: return 1;
-		case 19: return 1;
+		case 18: return 4;
+		case 19: return 4;
 		case 20: return NOTE_F4;
 		case 21: return NOTE_F4;
-		case 22: return 1;
+		case 22: return 4;
 		case 23: return NOTE_C5;
 		case 24: return NOTE_E4;
 		case 25: return NOTE_E4;
 		
-		case 26: return 1;
-		case 27: return 1;			
-		case 28: return 1;
-		case 29: return 1;
-		case 30: return 1;
-		case 31: return 1;
+		case 26: return 4;
+		case 27: return 4;			
+		case 28: return 4;
+		case 29: return 4;
+		case 30: return 4;
+		case 31: return 4;
 		case 32: return NOTE_E5;
 		case 33: return NOTE_E5;
-		case 34: return 1;
-		case 35: return 1;
+		case 34: return 4;
+		case 35: return 4;
 		case 36: return NOTE_E5;
 		case 37: return NOTE_E5;
-		case 38: return 1;
-		case 39: return 1;
+		case 38: return 4;
+		case 39: return 4;
 		case 40: return NOTE_E5;
 		case 41: return NOTE_E5;
-		case 42: return 1;
-		case 43: return 1;
+		case 42: return 4;
+		case 43: return 4;
 		case 44: return NOTE_F5;
 		case 45: return NOTE_F5;
-		case 46: return 1;
+		case 46: return 4;
 		case 47: return NOTE_C5;
 		case 48: return NOTE_GS4;
 		case 49: return NOTE_GS4;
-		case 50: return 1;
-		case 51: return 1;
+		case 50: return 4;
+		case 51: return 4;
 		case 52: return NOTE_F4;
 		case 53: return NOTE_F4;
-		case 54: return 1;
+		case 54: return 4;
 		case 55: return NOTE_C5;
 
-		default: return 1;
+		default: return 4;
 	}
 	/*
 	switch(noteCounter)
@@ -202,10 +202,10 @@ int notesStarWars(uint16_t noteCounter)
 		case 20: return NOTE_E5;
 		case 21: return NOTE_E5;
 		case 22: return NOTE_E5;
-		case 23: return 1;
-		case 24: return 1;
-		case 25: return 1;
-		case 26: return 1;
+		case 23: return 4;
+		case 24: return 4;
+		case 25: return 4;
+		case 26: return 4;
 		case 27: return NOTE_F4;			
 		case 28: return NOTE_F4;
 		case 29: return NOTE_GS4;
@@ -230,7 +230,7 @@ int notesStarWars(uint16_t noteCounter)
 		case 48: return NOTE_A4;
 		case 49: return NOTE_A4;
 
-		default: return 1;
+		default: return 4;
 	}*/
 }
 
@@ -241,137 +241,137 @@ int notesSound1(uint16_t noteCounter)
 		case 0: return NOTE_D4;			
 		case 1:	return NOTE_D4;
 		case 2: return NOTE_D5;			//		
-		case 3: return 1;
+		case 3: return 4;
 		case 4: return NOTE_A4;
-		case 5: return 1;
-		case 6: return 1;
+		case 5: return 4;
+		case 6: return 4;
 		case 7: return NOTE_GS4;
-		case 8: return 1;
+		case 8: return 4;
 		case 9: return NOTE_G4;
-		case 10: return 1;
+		case 10: return 4;
 		case 11: return NOTE_F4;
-		case 12: return 1;
+		case 12: return 4;
 		case 13: return NOTE_D4;
 		case 14: return NOTE_F4;
 		case 15: return NOTE_G4;
 		case 16: return NOTE_C4;
 		case 17: return NOTE_C4;
 		case 18: return NOTE_D5;		//
-		case 19: return 1;
+		case 19: return 4;
 		case 20: return NOTE_A4;
-		case 21: return 1;
-		case 22: return 1;
+		case 21: return 4;
+		case 22: return 4;
 		case 23: return NOTE_GS4;
-		case 24: return 1;
+		case 24: return 4;
 		case 25: return NOTE_G4;
 		
-		case 26: return 1;
+		case 26: return 4;
 		case 27: return NOTE_F4;
-		case 28: return 1;
+		case 28: return 4;
 		case 29: return NOTE_D4;
 		case 30: return NOTE_F4;
 		case 31: return NOTE_G4;
 		case 32: return NOTE_B3;
 		case 33: return NOTE_B3;
 		case 34: return NOTE_D5;		//
-		case 35: return 1;
+		case 35: return 4;
 		case 36: return NOTE_A4;
-		case 37: return 1;
-		case 38: return 1;
+		case 37: return 4;
+		case 38: return 4;
 		case 39: return NOTE_GS4;
-		case 40: return 1;
+		case 40: return 4;
 		case 41: return NOTE_G4;
-		case 42: return 1;
+		case 42: return 4;
 		case 43: return NOTE_F4;
-		case 44: return 1;
+		case 44: return 4;
 		case 45: return NOTE_D4;
 		case 46: return NOTE_F4;
 		case 47: return NOTE_G4;
 		case 48: return NOTE_AS3;
 		case 49: return NOTE_AS3;
-		case 50: return 1;
+		case 50: return 4;
 		case 51: return NOTE_D5;		//
 
-		case 52: return 1;
+		case 52: return 4;
 		case 53: return NOTE_A4;
-		case 54: return 1;
-		case 55: return 1;
+		case 54: return 4;
+		case 55: return 4;
 		case 56: return NOTE_GS4;
-		case 57: return 1;
+		case 57: return 4;
 		case 58: return NOTE_G4;
-		case 59: return 1;
+		case 59: return 4;
 		case 60: return NOTE_F4;
-		case 61: return 1;
+		case 61: return 4;
 		case 62: return NOTE_D4;
 		case 63: return NOTE_F4;
 		case 64: return NOTE_G4;
 		case 65: return NOTE_F4;
-		case 66: return 1;
+		case 66: return 4;
 		case 67: return NOTE_F4;
 		case 68: return NOTE_F4;
 		
 		
 		
-		case 69: return 1;
+		case 69: return 4;
 		case 70: return NOTE_F4;
-		case 71: return 1;
+		case 71: return 4;
 		case 72: return NOTE_F4;
-		case 73: return 1;
+		case 73: return 4;
 		case 74: return NOTE_D4;
-		case 75: return 1;
+		case 75: return 4;
 		case 76: return NOTE_D4;
-		case 77: return 1;
-		case 78: return 1;
+		case 77: return 4;
+		case 78: return 4;
 		case 79: return NOTE_D4;
-		case 80: return 1;
+		case 80: return 4;
 		case 81: return NOTE_F4;
 		case 82: return NOTE_F4;
 		case 83: return NOTE_F4;
 		case 84: return NOTE_F4;
 		
-		case 85: return 1;
+		case 85: return 4;
 		case 86: return NOTE_G4;
-		case 87: return 1;
+		case 87: return 4;
 		case 88: return NOTE_GS4;
-		case 89: return 1;
+		case 89: return 4;
 		case 90: return NOTE_G4;
 		case 91: return NOTE_F4;
 		case 92: return NOTE_D4;
 		case 93: return NOTE_F4;
 		case 94: return NOTE_G4;
-		case 95: return 1;
-		case 96: return 1;
+		case 95: return 4;
+		case 96: return 4;
 		case 97: return NOTE_F4;
-		case 98: return 1;
+		case 98: return 4;
 		case 99: return NOTE_F4;
 		case 100: return NOTE_F4;
-		case 101: return 1;
+		case 101: return 4;
 		case 102: return NOTE_G4;
 		
 		
-		case 103: return 1;
+		case 103: return 4;
 		case 104: return NOTE_GS4;
-		case 105: return 1;
+		case 105: return 4;
 		case 106: return NOTE_A4;
-		case 107: return 1;
+		case 107: return 4;
 		case 108: return NOTE_C5;
-		case 109: return 1;
+		case 109: return 4;
 		case 110: return NOTE_A4;
-		case 111: return 1;
-		case 112: return 1;
+		case 111: return 4;
+		case 112: return 4;
 		case 113: return NOTE_D5;
-		case 114: return 1;
+		case 114: return 4;
 		case 115: return NOTE_D5;
-		case 116: return 1;
+		case 116: return 4;
 		case 117: return NOTE_D5;
 		case 118: return NOTE_A4;
 		case 119: return NOTE_D5;
 		case 120: return NOTE_C5;
 		case 121: return NOTE_C5;
-		case 122: return 1;
-		case 123: return 1;
+		case 122: return 4;
+		case 123: return 4;
 		
-		default: return 1;
+		default: return 4;
 	}
 }
 
@@ -380,22 +380,22 @@ int notesSound2(uint16_t noteCounter)
 	switch(noteCounter)
 	{
 		case 0: return NOTE_F5;			
-		case 1:	return 1;
+		case 1:	return 4;
 		case 2: return NOTE_C5;
-		case 3: return 1;
+		case 3: return 4;
 		case 4: return NOTE_GS4;
-		case 5: return 1;
+		case 5: return 4;
 		case 6: return NOTE_F4;
-		case 7: return 1;
-		case 8: return 1;
+		case 7: return 4;
+		case 8: return 4;
 		case 9: return NOTE_B4;
 		case 10: return NOTE_AS4;
-		case 11: return 1;
+		case 11: return 4;
 		case 12: return NOTE_AS4;
 		case 13: return NOTE_GS4;
 		case 14: return NOTE_E4;
 		case 15: return NOTE_F4;
-		case 16: return 1;
+		case 16: return 4;
 		case 17: return NOTE_C5;
 		case 18: return NOTE_AS4;
 		case 19: return NOTE_GS4;
@@ -408,7 +408,7 @@ int notesSound2(uint16_t noteCounter)
 
 		case 26: return NOTE_E4;
 		case 27: return NOTE_F5;			
-		case 28: return 1;
+		case 28: return 4;
 		case 29: return NOTE_DS5;
 		case 30: return NOTE_C5;
 		case 31: return NOTE_GS4;
@@ -462,7 +462,7 @@ int notesSound2(uint16_t noteCounter)
 		case 63: return NOTE_C5;
 		
 		case 64: return NOTE_C5;
-		case 65: return 1;
+		case 65: return 4;
 		case 66: return NOTE_F5;
 		case 67: return NOTE_C6;
 		case 68: return NOTE_AS5;
@@ -531,7 +531,7 @@ int notesSound2(uint16_t noteCounter)
 		case 128: return NOTE_C5;
 		case 129: return NOTE_C5;
 //		case 130: return NOTE_F5;
-//		case 131: return 1;
+//		case 131: return 4;
 		
 		
 		/*
@@ -545,7 +545,7 @@ int notesSound2(uint16_t noteCounter)
 		
 		
 
-		default: return 1;
+		default: return 4;
 	}
 }
 
@@ -555,47 +555,47 @@ int notesSound3(uint16_t noteCounter)
 	{
 		case 0: return NOTE_D4;			
 		case 1:	return NOTE_D4;
-		case 2: return 1;
-		case 3: return 1;
+		case 2: return 4;
+		case 3: return 4;
 		case 4: return NOTE_G4;
 		case 5: return NOTE_G4;
-		case 6: return 1;
-		case 7: return 1;
-		case 8: return 1;
-		case 9: return 1;
+		case 6: return 4;
+		case 7: return 4;
+		case 8: return 4;
+		case 9: return 4;
 		case 10: return NOTE_AS4;
 		case 11: return NOTE_AS4;
 		case 12: return NOTE_A4;
 		case 13: return NOTE_A4;
-		case 14: return 1;
-		case 15: return 1;
+		case 14: return 4;
+		case 15: return 4;
 		case 16: return NOTE_G4;
 		case 17: return NOTE_G4;
-		case 18: return 1;
-		case 19: return 1;
-		case 20: return 1;
-		case 21: return 1;
-		case 22: return 1;
-		case 23: return 1;
+		case 18: return 4;
+		case 19: return 4;
+		case 20: return 4;
+		case 21: return 4;
+		case 22: return 4;
+		case 23: return 4;
 		case 24: return NOTE_D5;
 		case 25: return NOTE_D5;
 		
-		case 26: return 1;
-		case 27: return 1;			
+		case 26: return 4;
+		case 27: return 4;			
 		case 28: return NOTE_C5;
 		case 29: return NOTE_C5;
-		case 30: return 1;
-		case 31: return 1;
-		case 32: return 1;
-		case 33: return 1;
-		case 34: return 1;
-		case 35: return 1;
-		case 36: return 1;
-		case 37: return 1;
-		case 38: return 1;
+		case 30: return 4;
+		case 31: return 4;
+		case 32: return 4;
+		case 33: return 4;
+		case 34: return 4;
+		case 35: return 4;
+		case 36: return 4;
+		case 37: return 4;
+		case 38: return 4;
 		case 39: return NOTE_A4;
 		case 40: return NOTE_A4;
 
-		default: return 1;
+		default: return 4;
 	}
 }
