@@ -43,25 +43,25 @@ int main(void)
 		
 		if (buttons & 8)
 		{
-			*GPIO_PA_DOUT = 0x0800;
+			*GPIO_PA_DOUT = 0xf700;
 			playMelody(124, notesSound1);
 			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 4)
 		{
-			*GPIO_PA_DOUT = 0x0400;
+			*GPIO_PA_DOUT = 0xfb00;
 			playMelody(132, notesSound2);
 			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 2)
 		{
-			*GPIO_PA_DOUT = 0x0200;
+			*GPIO_PA_DOUT = 0xfd00;
 			playMelody(41, notesSound3);
 			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 1)
 		{
-			*GPIO_PA_DOUT = 0x0100;
+			*GPIO_PA_DOUT = 0xfe00;
 			playMelody(56, notesStarWars);
 			*GPIO_PA_DOUT = 0xff00;
 		}
