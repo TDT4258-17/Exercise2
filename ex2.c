@@ -4,22 +4,18 @@
 #include "efm32gg.h"
 
 /*
- * TODO calculate the appropriate sample period for the sound wave(s) you 
- * want to generate. The core clock (which the timer clock is derived
- * from) runs at 14 MHz by default. Also remember that the timer counter
- * registers are 16 bits. 
- */
-/*
- * The period between sound samples, in clock cycles (not Hz)
- */
-
-/*
- * Declaration of peripheral setup functions 
+ * Declaration of peripheral setup functions
  */
 void setupTimer();
 void setupDAC();
 void setupNVIC();
 void setupGPIO();
+
+/*
+ * Declaration of music playing functions
+ */
+void playMelody(uint16_t length, int (*noteTable)(uint16_t));
+void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t));
 
 int notesStartup(uint16_t noteCounter);
 int notesStarWars(uint16_t noteCounter);
@@ -27,13 +23,9 @@ int notesSound1(uint16_t noteCounter);
 int notesSound2(uint16_t noteCounter);
 int notesSound3(uint16_t noteCounter);
 
-void playMelody(uint16_t length, int (*noteTable)(uint16_t));
-void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t));
-
 /*
  * Your code will start executing here 
  */
-
 int main(void)
 {
 	/*
@@ -43,19 +35,7 @@ int main(void)
 	setupDAC();
 	setupTimer();
 
-	/*
-	 * Enable interrupt handling 
-	 */
-	setupNVIC();
-
-
-//	playMelody(16, notesStartup);
-	playMelodyAlternative(16, notesStartup);
-
-	/*
-	 * TODO for higher energy efficiency, sleep while waiting for
-	 * interrupts instead of infinite loop for busy-waiting 
-	 */
+	playMelody(16, notesStartup);
 
 	while (1)
 	{	
@@ -63,66 +43,28 @@ int main(void)
 		
 		if (buttons & 8)
 		{
-			//playMelody(124, notesSound1);
-			playMelodyAlternative(124, notesSound1);
+			*GPIO_PA_DOUT = 0x0800;
+			playMelody(124, notesSound1);
+			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 4)
 		{
-			//playMelody(132, notesSound2);
-			playMelodyAlternative(132, notesSound2);
+			*GPIO_PA_DOUT = 0x0400;
+			playMelody(132, notesSound2);
+			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 2)
 		{
-			//playMelody(41, notesSound3);
-			playMelodyAlternative(41, notesSound3);
+			*GPIO_PA_DOUT = 0x0200;
+			playMelody(41, notesSound3);
+			*GPIO_PA_DOUT = 0xff00;
 		}
 		else if (buttons & 1)
 		{
-			//playMelody(56, notesStarWars);
-			playMelodyAlternative(56, notesStarWars);
+			*GPIO_PA_DOUT = 0x0100;
+			playMelody(56, notesStarWars);
+			*GPIO_PA_DOUT = 0xff00;
 		}
 	}
-
 	return 0;
 }
-
-void setupNVIC()
-{
-	/*
-	 * TODO use the NVIC ISERx registers to enable handling of
-	 * interrupt(s) remember two things are necessary for interrupt
-	 * handling: - the peripheral must generate an interrupt signal - the
-	 * NVIC must be configured to make the CPU handle the signal You will
-	 * need TIMER1, GPIO odd and GPIO even interrupt handling for this
-	 * assignment. 
-	 */
-	 
-	*ISER0 = 0x802;		// enable timer interrupt (bit 12) and GPIO interrupt (bit 11)
-	*GPIO_EXTIPSELL = 0x22222222;
-	*GPIO_IEN = 0xff;
-	*GPIO_EXTIFALL = 0xff;
-	*GPIO_EXTIRISE = 0xff;
-	*GPIO_IFC = *GPIO_IF;
-	
-}
-
-/*
- * if other interrupt handlers are needed, use the following names:
- * NMI_Handler HardFault_Handler MemManage_Handler BusFault_Handler
- * UsageFault_Handler Reserved7_Handler Reserved8_Handler
- * Reserved9_Handler Reserved10_Handler SVC_Handler DebugMon_Handler
- * Reserved13_Handler PendSV_Handler SysTick_Handler DMA_IRQHandler
- * GPIO_EVEN_IRQHandler TIMER0_IRQHandler USART0_RX_IRQHandler
- * USART0_TX_IRQHandler USB_IRQHandler ACMP0_IRQHandler ADC0_IRQHandler
- * DAC0_IRQHandler I2C0_IRQHandler I2C1_IRQHandler GPIO_ODD_IRQHandler
- * TIMER1_IRQHandler TIMER2_IRQHandler TIMER3_IRQHandler
- * USART1_RX_IRQHandler USART1_TX_IRQHandler LESENSE_IRQHandler
- * USART2_RX_IRQHandler USART2_TX_IRQHandler UART0_RX_IRQHandler
- * UART0_TX_IRQHandler UART1_RX_IRQHandler UART1_TX_IRQHandler
- * LEUART0_IRQHandler LEUART1_IRQHandler LETIMER0_IRQHandler
- * PCNT0_IRQHandler PCNT1_IRQHandler PCNT2_IRQHandler RTC_IRQHandler
- * BURTC_IRQHandler CMU_IRQHandler VCMP_IRQHandler LCD_IRQHandler
- * MSC_IRQHandler AES_IRQHandler EBI_IRQHandler EMU_IRQHandler 
- */
-
-

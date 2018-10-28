@@ -8,24 +8,16 @@
  */
 void setupTimer()
 {
-	/*
-	 * TODO enable and set up the timer
-	 * 
-	 * 1. Enable clock to timer by setting bit 6 in CMU_HFPERCLKEN0 2.
-	 * Write the period to register TIMER1_TOP 3. Enable timer interrupt
-	 * generation by writing 1 to TIMER1_IEN 4. Start the timer by writing 
-	 * 1 to TIMER1_CMD
-	 * 
-	 * This will cause a timer interrupt to be generated every (period)
-	 * cycles. Remember to configure the NVIC as well, otherwise the
-	 * interrupt handler will not be invoked. 
-	 */
-	 
-	*CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	*TIMER1_TOP = 0xffff;				// set period between interrupts 1st method
-	*TIMER1_CMD = 1;					// start timer1
+	/* enable clock to timer module */
+	*CMU_HFPERCLKEN0 |= 0b01000000;
 
+	/* set period between interrupts 1st method */
+	*TIMER1_TOP = 0xffff;
+
+	/* start timer1 */
+	*TIMER1_CMD = 1;					
+
+	/* Set timer1 prescalar to 32 for timer frequency of 437500 */
 	*TIMER1_CTRL &= 0xf0ffffff;
 	*TIMER1_CTRL |= 0x05000000;
- 
 }
