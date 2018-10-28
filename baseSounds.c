@@ -4,15 +4,17 @@
 #include "efm32gg.h"
 #include "notes.h"
 
-#define   SAMPLE_PERIOD   311 // which gives us 45 KHz (45016.07717 Hz)
+#define   SAMPLE_PERIOD   311 // which gives us ~45 KHz (45016.07717 Hz)
 
 void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 {
 	uint16_t note = 1; // 1 means mute
 	bool toggle = false;
-	const int startMelodyCounterLimit = length * 5625; // 45000*0.125 = 5625
+	// each note is activated for 0.125 seconds or 5625 samples
+	const uint16_t samplingPeriodsPerNote = 5625;
+	const int samplingPeriodCounterLimit = length * samplingPeriodsPerNote; // 45000*0.125 = 5625
 	
-	for ( uint32_t startMelodyCounter = 0; startMelodyCounter < startMelodyCounterLimit ; startMelodyCounter++ ) // 7 seconds startup melody
+	for ( uint32_t samplingPeriodCounter = 0; samplingPeriodCounter < samplingPeriodCounterLimit ; samplingPeriodCounter++ ) // 7 seconds startup melody
 	{
 		/* SAMPLING PART */
 		uint16_t samplingTimer = *TIMER1_CNT; 
@@ -24,9 +26,12 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 		*TIMER1_CNT = 0;
 
 		/* NOTE PART */
-		uint16_t noteFreqMaxCount = 45000 / note; //we are calculating the frequency in terms of the sampling frequency
+
+		//uint16_t noteFreqMaxCount = 45000 / note; //we are calculating the note frequency in terms of the sampling frequency
+		uint16_t noteFreqMaxCount = 22500 / note; //we are calculating the note frequency in terms of the sampling frequency
+		// how many sampling periods we need to wait unti
 		
-		if (startMelodyCounter % noteFreqMaxCount == 0)
+		if (samplingPeriodCounter % noteFreqMaxCount == 0)
 		{
 			if (toggle)
 			{
@@ -45,20 +50,18 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 				toggle = true;
 			}
 		}
-		// each note is activated for 0.125 seconds or 5625 samples
-		uint16_t songNoteMaxCount = 5625;
-		uint16_t songCounter = startMelodyCounter / songNoteMaxCount;
+		uint16_t noteCounter = samplingPeriodCounter / samplingPeriodsPerNote;
 
-		if (startMelodyCounter % songNoteMaxCount == 0)
+		if (samplingPeriodCounter % samplingPeriodsPerNote == 0)
 		{
-			note = (*noteTable)(songCounter);
+			note = (*noteTable)(noteCounter);
 		}
 	}
 
 }
-int notesStartup(uint16_t songCounter)
+int notesStartup(uint16_t noteCounter)
 {
-	switch(songCounter)
+	switch(noteCounter)
 	{
 	case 0: return NOTE_A4;
 	case 1:	return NOTE_C5;
@@ -82,9 +85,9 @@ int notesStartup(uint16_t songCounter)
 	
 }
 
-int notesStarWars(uint16_t songCounter)
+int notesStarWars(uint16_t noteCounter)
 {
-	switch(songCounter)
+	switch(noteCounter)
 	{
 		case 0: return NOTE_E4;
 		case 1:	return NOTE_E4;
@@ -147,7 +150,7 @@ int notesStarWars(uint16_t songCounter)
 		default: return 1;
 	}
 	/*
-	switch(songCounter)
+	switch(noteCounter)
 	{
 		case 0: return NOTE_F4;
 		case 1:	return NOTE_F4;
@@ -204,9 +207,9 @@ int notesStarWars(uint16_t songCounter)
 	}*/
 }
 
-int notesSound1(uint16_t songCounter)
+int notesSound1(uint16_t noteCounter)
 {
-	switch(songCounter)
+	switch(noteCounter)
 	{
 		case 0: return NOTE_D4;			
 		case 1:	return NOTE_D4;
@@ -345,9 +348,9 @@ int notesSound1(uint16_t songCounter)
 	}
 }
 
-int notesSound2(uint16_t songCounter)
+int notesSound2(uint16_t noteCounter)
 {
-	switch(songCounter)
+	switch(noteCounter)
 	{
 		case 0: return NOTE_F5;			
 		case 1:	return 1;
@@ -519,9 +522,9 @@ int notesSound2(uint16_t songCounter)
 	}
 }
 
-int notesSound3(uint16_t songCounter)
+int notesSound3(uint16_t noteCounter)
 {
-	switch(songCounter)
+	switch(noteCounter)
 	{
 		case 0: return NOTE_D4;			
 		case 1:	return NOTE_D4;

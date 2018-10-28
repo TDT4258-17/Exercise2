@@ -21,11 +21,11 @@ void setupDAC();
 void setupNVIC();
 void setupGPIO();
 
-int notesStartup(uint16_t songCounter);
-int notesStarWars(uint16_t songCounter);
-int notesSound1(uint16_t songCounter);
-int notesSound2(uint16_t songCounter);
-int notesSound3(uint16_t songCounter);
+int notesStartup(uint16_t noteCounter);
+int notesStarWars(uint16_t noteCounter);
+int notesSound1(uint16_t noteCounter);
+int notesSound2(uint16_t noteCounter);
+int notesSound3(uint16_t noteCounter);
 
 void playMelody(uint16_t length, int (*noteTable)(uint16_t));
 
