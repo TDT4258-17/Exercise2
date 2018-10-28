@@ -75,6 +75,8 @@ void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t))
 		{
 			// toggle audio cahnnels
 			*DAC0_CH0DATA = 128 * (   toggle     % 2 );
+
+			
 			*DAC0_CH1DATA = 128 * ( ( toggle++ ) % 2 );
 
 			uint16_t initialTimerCounter = *TIMER1_CNT;
