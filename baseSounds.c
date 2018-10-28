@@ -73,12 +73,13 @@ void playMelodyAlternative(uint16_t length, int (*noteTable)(uint16_t))
 
 		while (count < 54688) // while not 125 ms have elapsed
 		{
-			// toggle audio cahnnels
-			*DAC0_CH0DATA = 128 * (   toggle     % 2 );
-
+			if ( note > 4)
+			{
+				// toggle audio cahnnels
+				*DAC0_CH0DATA = 128 * (   toggle     % 2 );
+				*DAC0_CH1DATA = 128 * ( ( toggle++ ) % 2 );
+			}
 			
-			*DAC0_CH1DATA = 128 * ( ( toggle++ ) % 2 );
-
 			uint16_t initialTimerCounter = *TIMER1_CNT;
 			while ((count - initialTimerCounter) < timerCountsToWait) // while not one half note period has elapsed
 			{//Busy wait
