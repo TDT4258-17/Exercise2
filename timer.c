@@ -5,8 +5,15 @@
 
 void startTimer()
 {
+	*TIMER1_CNT = 0;
 	// TIMER1_CMD is a write only register
 	*TIMER1_CMD = 1;		// start timer1
+}
+
+void stopTimer()
+{
+	// TIMER1_CMD is a write only register
+	*TIMER1_CMD = 2;		// stop timer1
 }
 
 /*
@@ -32,5 +39,7 @@ void setupTimer()
 	//*TIMER1_TOP = 317;		// set period between interrupts.
 							//    317 times 14MHz cycles 
 							// => 44.16403785 KHz frequency, closest to 44.100 KHz
-	*TIMER1_TOP = 7000;
+	*TIMER1_TOP = 1750;		// => 8 KHz frequency
+//	*TIMER1_TOP = 7000;		// => 2 KHz frequency
 }
+

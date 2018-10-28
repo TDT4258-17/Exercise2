@@ -33,8 +33,8 @@ void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 				// mute if note is 1
 				if (note != 1)
 				{
-					*DAC0_CH0DATA = 512;
-					*DAC0_CH1DATA = 512;
+					*DAC0_CH0DATA = 256;
+					*DAC0_CH1DATA = 256;
 				}
 				toggle = false;
 			}

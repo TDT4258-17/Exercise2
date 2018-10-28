@@ -11,15 +11,7 @@
  */
  
 //static int8_t sine_signed[32] = {0, 25, 49, 71, 90, 106, 117, 125, 127, 125, 117, 106, 90, 71, 49, 25, 0, -25, -49, -71, -90, -106, -117, -125, -127, -125, -117, -106, -90, -71, -49, -25};
-static uint8_t sine_unsigned[] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
-static uint16_t index = 0;
-
-/*
- * The period between sound samples, in clock cycles (not Hz)
- */
-
-extern uint8_t song[];
-extern bool needNewDacData;
+//static uint8_t sine_unsigned[] = {127, 152, 176, 198, 217, 233, 244, 252, 254, 252, 244, 233, 217, 198, 176, 152, 127, 102, 78, 56, 37, 21, 10, 2, 0, 2, 10, 21, 37, 56, 78, 102 };
 
 /*
  * Declaration of peripheral setup functions 
@@ -30,14 +22,10 @@ void setupNVIC();
 void setupGPIO();
 
 int notesStartup(uint16_t songCounter);
-int notesStarWars(uint16_t songCounter);
-int notesSound1(uint16_t songCounter);
-int notesSound2(uint16_t songCounter);
-int notesSound3(uint16_t songCounter);
-
 void playMelody(uint16_t length, int (*noteTable)(uint16_t));
 
 void startTimer();
+void stopTimer();
 
 /*
  * Your code will start executing here 
@@ -51,15 +39,16 @@ int main(void)
 	setupGPIO();
 	setupDAC();
 	setupTimer();
+	
+	startTimer();
+	
+	playMelody(8, notesStartup);
+	
+	stopTimer();
 
 	/*
 	 * Enable interrupt handling 
 	 */
-	
-	startTimer();
-	
-	playMelody(16, notesStartup);
-	
 	
 	setupNVIC();
 
@@ -67,7 +56,6 @@ int main(void)
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
-	uint16_t indicator = 0;
 	
 	while (1)
 	{
@@ -80,22 +68,7 @@ int main(void)
 //		asm("wfi");
 		__asm("wfi"); // Finally, this worked.
 		
-		if (needNewDacData)
-		{
-			// *GPIO_PA_DOUT = indicator++;
-				
-//			*DAC0_CH0DATA = sine_unsigned[index%32];
-//			*DAC0_CH1DATA = sine_unsigned[index%32];
-			*DAC0_CH0DATA = song[index];
-			*DAC0_CH1DATA = song[index];
-
-			index++;
-			needNewDacData = false;
-			if (index > 41000)
-			{
-				index = 0;
-			}
-		}
+		
 	}
 
 	return 0;
