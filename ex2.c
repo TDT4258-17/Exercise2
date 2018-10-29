@@ -16,10 +16,11 @@
 /*
  * Declaration of peripheral setup functions 
  */
-void setupTimer();
-void setupDAC();
-void setupNVIC();
 void setupGPIO();
+void setupDAC();
+void setupTimerForStartup();
+void setupTimerForInterrupts();
+void setupNVIC();
 
 int notesStartup(uint16_t songCounter);
 void playMelody(uint16_t length, int (*noteTable)(uint16_t));
@@ -33,22 +34,17 @@ void stopTimer();
 
 int main(void)
 {
-	/*
-	 * Call the peripheral setup functions 
-	 */
+	/* Call the peripheral setup functions */
+
 	setupGPIO();
 	setupDAC();
-	
-	playMelody(8, notesStartup);
-	
-	stopTimer();
-	setupTimer();
+	setupTimerForStartup();
 
-	/*
-	 * Enable interrupt handling 
-	 */
+	playMelody(12, notesStartup);
 	
-	setupNVIC();
+	setupTimerForInterrupts();
+
+	setupNVIC();	// Enable interrupt handling
 	
 	/*
 	 * TODO for higher energy efficiency, sleep while waiting for
@@ -56,6 +52,7 @@ int main(void)
 	 */
 	 
 	*SCR |= 0x02; // enable automatic return to sleep after return from ISR
+	*CMU_HFPERCLKDIV |= 0x00; // reducing core clock frequency
 	
 	while (1)
 	{
@@ -64,17 +61,6 @@ int main(void)
 
 	return 0;
 }
-
-
-//		wfi;
-//		WFI;
-//		WFI();
-//		wfi();
-//		__wfi();
-//		_wfi();
-//		__WFI();
-//		asm("wfi");
-//		__asm("wfi"); // Finally, this worked.
 
 void setupNVIC()
 {
