@@ -38,41 +38,43 @@ int main(void)
 	 */
 	setupGPIO();
 	setupDAC();
-	setupTimer();
-	
-	startTimer();
 	
 	playMelody(8, notesStartup);
 	
 	stopTimer();
+	setupTimer();
 
 	/*
 	 * Enable interrupt handling 
 	 */
 	
 	setupNVIC();
-
+	
 	/*
 	 * TODO for higher energy efficiency, sleep while waiting for
 	 * interrupts instead of infinite loop for busy-waiting 
 	 */
+	 
+	*SCR |= 0x02; // enable automatic return to sleep after return from ISR
 	
 	while (1)
 	{
+		__asm volatile ("wfi"); // Finally, this worked.
+	}
+
+	return 0;
+}
+
+
 //		wfi;
 //		WFI;
 //		WFI();
 //		wfi();
 //		__wfi();
 //		_wfi();
+//		__WFI();
 //		asm("wfi");
-		__asm("wfi"); // Finally, this worked.
-		
-		
-	}
-
-	return 0;
-}
+//		__asm("wfi"); // Finally, this worked.
 
 void setupNVIC()
 {
@@ -85,7 +87,7 @@ void setupNVIC()
 	 * assignment. 
 	 */
 	 
-	*ISER0 |= 0x802;	// Enable even and odd GPIO interrupts
+	*ISER0 |=  0x802;	// Enable even and odd GPIO interrupts
 	*ISER0 |= 0x1000;	// Enable TIMER1 interrupts
 	
 	*GPIO_EXTIPSELL = 0x22222222;
