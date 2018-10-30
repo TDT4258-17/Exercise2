@@ -6,12 +6,6 @@
 
 void playMelody(uint16_t length, int (*noteTable)(uint16_t))
 {
-	*CMU_HFPERCLKEN0 |= 0b01000000;	// set enable clock to timer module
-	*TIMER1_TOP = 0xffff;
-	*TIMER1_CTRL &= 0xf0ffffff;
-	*TIMER1_CTRL |= 0x05000000;
-	*TIMER1_CMD = 1;		// start timer1
-	
 	uint8_t toggle = 0;
 	for ( uint16_t noteIndex = 0; noteIndex < length; noteIndex++ )
 	{

@@ -16,9 +16,6 @@ void stopTimer()
 	*TIMER1_CMD = 2;		// stop timer1
 }
 
-/*
- * function to setup the timer 
- */
 void setupTimerForInterrupts()
 {
 	*TIMER1_CMD = 2;
